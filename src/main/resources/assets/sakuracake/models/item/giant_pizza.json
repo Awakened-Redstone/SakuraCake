@@ -1,0 +1,20 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "sakuracake:item/giant_pizza"
+  },
+  "display": {
+    "thirdperson_righthand": {
+      "scale": [64, 64, 64]
+    },
+    "thirdperson_lefthand": {
+      "scale": [64, 64, 64]
+    },
+    "ground": {
+      "scale": [128, 128, 128]
+    },
+    "gui": {
+      "scale": [2, 2, 2]
+    }
+  }
+}

@@ -1,0 +1,10 @@
+accessWidener v1 named
+
+#Classes
+accessible  class   net/minecraft/client/render/model/json/Transformation$Deserializer
+
+#Methods
+accessible  method  net/minecraft/entity/damage/DamageSource            <init>              (Ljava/lang/String;)V
+accessible  method  net/minecraft/entity/damage/DamageSource            setBypassesArmor    ()Lnet/minecraft/entity/damage/DamageSource;
+accessible  method  net/minecraft/entity/damage/DamageSource            setUnblockable      ()Lnet/minecraft/entity/damage/DamageSource;
+accessible  method  net/minecraft/entity/projectile/ProjectileEntity    <init>              (Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;)V

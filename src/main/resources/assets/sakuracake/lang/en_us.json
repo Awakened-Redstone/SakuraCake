@@ -1,0 +1,24 @@
+{
+  "item.sakuracake.iron_sakura_magnet": "Iron Sakura Magnet",
+  "item.sakuracake.golden_sakura_magnet": "Golden Sakura Magnet",
+  "item.sakuracake.diamond_sakura_magnet": "Diamond Sakura Magnet",
+  "item.sakuracake.emerald_sakura_magnet": "Emerald Sakura Magnet",
+  "item.sakuracake.ancient_sakura_magnet": "Ancient Sakura Magnet",
+  "item.sakuracake.netherite_sakura_magnet": "Netherite Sakura Magnet",
+  "item.sakuracake.sakura_magnet": "Sakura Magnet",
+  "item.sakuracake.giant_pizza": "Giant Pizza",
+  "item.sakuracake.wings_of_eternal_flames": "Wings of Eternal Flames",
+
+  "keybind.category.sakuracake": "Sakura Cake",
+  "key.sakuracake.wingsBoost": "Elytra boost",
+
+  "death.attack.brokenSakuraItem": "%s got cut by the shards of a sakura item.",
+  "death.attack.impossibleAction": "%s tried to challenge the laws of physics.",
+
+  "item.sakuracake.magnet.deactivate": "\u00a7dThe magnet is now \u00a7cdisabled\u00a7d.",
+  "item.sakuracake.magnet.activate": "\u00a7dThe magnet is now \u00a7aenabled\u00a7d.",
+  "item.sakuracake.magnet.status": "\u00a78The magnet is %s\u00a78.",
+
+  "item.sakuracake.silvervale.magnet.activate": "\u00a7d\uD83C\uDF38 Pullie is now \u00a7aenabled\u00a7d.",
+  "item.sakuracake.silvervale.magnet.deactivate": "\u00a7d\uD83C\uDF38 Pullie is now \u00a7cdisabled\u00a7d."
+}

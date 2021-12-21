@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "sakuracake",
+  "version": "${version}",
+  "name": "SakuraCake",
+  "description": "SakuraCake!\n(✿◠‿◠)",
+  "authors": [
+    "Awakened Redstone"
+  ],
+  "contact": {
+    "repo": "https://github.com/Awakened-Redstone/SakuraCake",
+    "sources": "https://github.com/Awakened-Redstone/SakuraCake",
+    "issues": "https://github.com/Awakened-Redstone/SakuraCake/issues"
+  },
+  "license": "AGPL-3.0-only",
+  "icon": "assets/sakuracake/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "com.awakenedredstone.sakuracake.client.SakuraCakeClient"
+    ],
+    "main": [
+      "com.awakenedredstone.sakuracake.SakuraCake"
+    ]
+  },
+  "accessWidener": "sakuracake.accesswidener",
+  "mixins": [
+    "sakuracake.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.12.11",
+    "fabric": "*",
+    "minecraft": ">=1.18.1"
+  },
+  "suggests": {
+    "patchouli": ">=1.18-60-FABRIC"
+  },
+  "recommends": {
+    "pehkui": ">=3.0.0"
+  }
+}

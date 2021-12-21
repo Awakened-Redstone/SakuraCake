@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.awakenedredstone.sakuracake.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": [
+    "AnvilScreenHandlerMixin",
+    "FireworkRocketEntityMixin",
+    "HungerManagerMixin",
+    "ItemEntityMixin",
+    "LivingEntityMixin",
+    "PlayerListEntryMixin",
+    "WitherEntityMixin",
+    "WolfEntityMixin"
+  ],
+  "client": [
+    "TransformationMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
