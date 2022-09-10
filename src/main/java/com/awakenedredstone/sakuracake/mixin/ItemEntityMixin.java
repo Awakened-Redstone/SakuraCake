@@ -1,7 +1,7 @@
 package com.awakenedredstone.sakuracake.mixin;
 
 import com.awakenedredstone.sakuracake.events.ItemPickupEvent;
-import com.awakenedredstone.sakuracake.item.GiantPizzaItem;
+import com.awakenedredstone.sakuracake.item.food.GiantPizzaItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;

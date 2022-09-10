@@ -5,7 +5,7 @@ import com.awakenedredstone.sakuracake.item.MagnetItem;
 public class GoldenMagnet extends MagnetItem {
 
     public GoldenMagnet(Settings settings) {
-        super(settings, (byte) 7);
+        super(settings, (byte) 5);
     }
 
 }

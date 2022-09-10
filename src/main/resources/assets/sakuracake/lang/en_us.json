@@ -8,17 +8,27 @@
   "item.sakuracake.sakura_magnet": "Sakura Magnet",
   "item.sakuracake.giant_pizza": "Giant Pizza",
   "item.sakuracake.wings_of_eternal_flames": "Wings of Eternal Flames",
+  "item.sakuracake.music_disc_1000000000000": "Music Disc",
+  "item.sakuracake.crimson_staff": "Crimson Staff",
+
+  "item.sakuracake.music_disc_1000000000000.desc": "YouTube - One Trillion Minecraft Views",
+  "item.sakuracake.music_disc_1000000000000.playing": "Music Unavailable, Blame YouTube",
 
   "keybind.category.sakuracake": "Sakura Cake",
   "key.sakuracake.wingsBoost": "Elytra boost",
+  "key.sakuracake.yeetItem": "Yeet Item",
 
   "death.attack.brokenSakuraItem": "%s got cut by the shards of a sakura item.",
   "death.attack.impossibleAction": "%s tried to challenge the laws of physics.",
+  "death.attack.itemYeet": "%1$s was pummeled by %2$s using %3$s",
 
   "item.sakuracake.magnet.deactivate": "\u00a7dThe magnet is now \u00a7cdisabled\u00a7d.",
   "item.sakuracake.magnet.activate": "\u00a7dThe magnet is now \u00a7aenabled\u00a7d.",
   "item.sakuracake.magnet.status": "\u00a78The magnet is %s\u00a78.",
 
   "item.sakuracake.silvervale.magnet.activate": "\u00a7d\uD83C\uDF38 Pullie is now \u00a7aenabled\u00a7d.",
-  "item.sakuracake.silvervale.magnet.deactivate": "\u00a7d\uD83C\uDF38 Pullie is now \u00a7cdisabled\u00a7d."
+  "item.sakuracake.silvervale.magnet.deactivate": "\u00a7d\uD83C\uDF38 Pullie is now \u00a7cdisabled\u00a7d.",
+
+  "entity.sakuracake.yeeted_item": "Yeeted Item",
+  "text.sakuracake.dont_ask_it_was_loltwitchmods": "Don't ask why, it was LolTwitchMods' idea!"
 }

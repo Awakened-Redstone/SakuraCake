@@ -12,16 +12,15 @@ import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class SakuraMagnet extends MagnetItem {
     private final byte pullRange = (byte) (this.reach / (byte) 2);
 
     public SakuraMagnet(Settings settings) {
-        super(settings, (byte) 24);
+        super(settings, (byte) 13);
 
-        ItemPickupEvent.EVENT.register((player, itemEntity, itemStack) -> {
-            pulledItems.remove(itemEntity.getUuid());
-        });
+        ItemPickupEvent.EVENT.register((player, itemEntity, itemStack) -> pulledItems.remove(itemEntity.getUuid()));
     }
 
     @Override
@@ -34,7 +33,7 @@ public class SakuraMagnet extends MagnetItem {
         return !(player.getInventory().getOccupiedSlotWithRoomForStack(item.getStack()) == -1 && player.getInventory().getEmptySlot() == -1);
     }
 
-    @Override
+    @Override //TODO: Better smoother way to move items without performance impact
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (!world.isClient && this.isEnabled(stack) && entity instanceof PlayerEntity player) {
             List<ItemEntity> pickupItems = world.getNonSpectatingEntities(ItemEntity.class, entity.getBoundingBox().expand(this.reach));
@@ -48,6 +47,7 @@ public class SakuraMagnet extends MagnetItem {
                 }
             }
             for (ItemEntity item : moveItems) {
+                if (getClosestPlayerWithMagnet(item, pullRange) != player) continue;
                 //noinspection ConstantConditions
                 if (!item.isAlive() || (stack.hasNbt() && stack.getNbt().getBoolean("PreventRemoteMovement")) || item.getScoreboardTags().contains("PreventMagnetMovement"))
                     continue;
@@ -57,7 +57,7 @@ public class SakuraMagnet extends MagnetItem {
                 }
                 if (!pulledItems.get(item.getUuid()).equals(player.getUuid())) continue;
                 item.resetPickupDelay();
-                this.moveItemToPlayer(item, player, 3, false);
+                this.moveItemToPlayer(item, player, 0.15f, pulledItems.size() > 100);
             }
         }
     }

@@ -1,11 +1,10 @@
-package com.awakenedredstone.sakuracake.item;
+package com.awakenedredstone.sakuracake.item.food;
 
 import com.awakenedredstone.sakuracake.SakuraCake;
 import com.awakenedredstone.sakuracake.entity.SitEntity;
 import com.awakenedredstone.sakuracake.integration.Pehkui;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -14,17 +13,13 @@ import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.potion.Potions;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -44,7 +39,7 @@ public class GiantPizzaItem extends Item {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(new LiteralText("Don't ask why, it was LolTwitchMods' idea!").formatted(Formatting.DARK_GRAY));
+        tooltip.add(Text.translatable("text.sakuracake.dont_ask_it_was_loltwitchmods").formatted(Formatting.DARK_GRAY));
     }
 
     @Override

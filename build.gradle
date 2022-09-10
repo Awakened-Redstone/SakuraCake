@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.10-SNAPSHOT'
+    id 'fabric-loom' version '1.0-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -11,9 +11,11 @@ loom {
 }
 
 repositories {
-    maven { url "https://maven.shedaniel.me" } //REI
+    maven { url 'https://maven.shedaniel.me' } //REI
     maven { url 'https://maven.blamejared.com' } //Patchouli
-    maven { url = "https://jitpack.io" } //Pehkui
+    maven { url 'https://jitpack.io' } //Pehkui
+    //maven { url "https://maven.tterrag.com/" } //Flywheel
+    maven { url 'https://maven.wispforest.io' } //Wisp Forest
 }
 
 dependencies {
@@ -23,8 +25,14 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    modImplementation "vazkii.patchouli:Patchouli:${project.patchouli}"
-    modImplementation "com.github.virtuoel:pehkui:${pehkui_version}"
+    modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}"
+    modApi("com.github.Virtuoel:Pehkui:${pehkui_version}", {
+        exclude group: "net.fabricmc.fabric-api"
+    })
+    modImplementation "io.wispforest:owo-lib:${owo_version}"
+    //modImplementation "com.jozufozu.flywheel:Flywheel-Fabric:${flywheel_version}"
+
+    include "io.wispforest:owo-sentinel:${project.owo_version}"
 }
 
 processResources {

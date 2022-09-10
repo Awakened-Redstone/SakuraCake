@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "sakuracake:block/sakura_pedestal"
+    },
+    "facing=east": {
+      "model": "sakuracake:block/sakura_pedestal",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "sakuracake:block/sakura_pedestal",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "sakuracake:block/sakura_pedestal",
+      "y": 270
+    }
+  }
+}

@@ -53,7 +53,7 @@ public class PlayerListEntryMixin {
         Path capesPath = FabricLoader.getInstance().getModContainer(SakuraCake.MOD_ID).get().getPath("data/sakuracake/special/capes.json");
         if (capesPath != null) {
             try (BufferedReader reader = Files.newBufferedReader(capesPath)) {
-                JsonElement json = new JsonParser().parse(new JsonReader(reader));
+                JsonElement json = JsonParser.parseReader(new JsonReader(reader));
                 if (json == null) return;
                 JsonElement capeId = json.getAsJsonObject().get(profile.getId().toString());
                 if (capeId != null) {
@@ -69,7 +69,7 @@ public class PlayerListEntryMixin {
         Path capesPath = FabricLoader.getInstance().getModContainer(SakuraCake.MOD_ID).get().getPath("data/sakuracake/special/capes.json");
         if (capesPath != null) {
             try (BufferedReader reader = Files.newBufferedReader(capesPath)) {
-                JsonElement json = new JsonParser().parse(new JsonReader(reader));
+                JsonElement json = JsonParser.parseReader(new JsonReader(reader));
                 if (json == null) return null;
                 JsonElement capeId = json.getAsJsonObject().get(profile.getId().toString());
                 if (capeId != null) {

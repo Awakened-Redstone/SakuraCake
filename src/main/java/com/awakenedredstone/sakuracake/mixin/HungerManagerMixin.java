@@ -15,12 +15,12 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public class HungerManagerMixin {
 
     @Shadow private int foodLevel;
-    @Shadow private float foodSaturationLevel;
+    @Shadow private float saturationLevel;
 
     @Inject(method = "add", at = @At(value = "HEAD"))
     private void add(int food, float saturationModifier, CallbackInfo ci) {
-        this.foodLevel = Math.min(this.foodLevel, 0);
-        this.foodSaturationLevel = Math.min(this.foodSaturationLevel, 0);
+        this.foodLevel = Math.max(this.foodLevel, 0);
+        this.saturationLevel = Math.max(this.saturationLevel, 0);
     }
 
     @Inject(method = "eat", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/HungerManager;add(IF)V"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
@@ -29,7 +29,7 @@ public class HungerManagerMixin {
         float saturationModifier = foodComponent.getSaturationModifier();
         if (food > 1E+4) {
             this.foodLevel = (int)Math.min(((long)food + (long)this.foodLevel), 2147483647);
-            this.foodSaturationLevel = Math.min(this.foodSaturationLevel + food * saturationModifier * 2.0f, this.foodLevel * (saturationModifier / 2));
+            this.saturationLevel = Math.min(this.saturationLevel + food * saturationModifier * 2.0f, this.foodLevel * (saturationModifier / 2));
             ci.cancel();
         }
     }

@@ -5,7 +5,7 @@ import com.awakenedredstone.sakuracake.item.MagnetItem;
 public class DiamondMagnet extends MagnetItem {
 
     public DiamondMagnet(Settings settings) {
-        super(settings, (byte) 11);
+        super(settings, (byte) 7);
     }
 
 }

@@ -16,7 +16,7 @@ public class AncientMagnet extends MagnetItem {
     private final byte pullRange = (byte) (this.reach / (byte) 2);
 
     public AncientMagnet(Settings settings) {
-        super(settings, (byte) 13);
+        super(settings, (byte) 9);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class AncientMagnet extends MagnetItem {
                 }
                 if (!pulledItems.get(item.getUuid()).equals(player.getUuid())) continue;
                 item.resetPickupDelay();
-                this.moveItemToPlayer(item, player, 3, false);
+                this.moveItemToPlayer(item, player, 0.3f, pulledItems.size() > 100);
             }
         }
     }
