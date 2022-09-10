@@ -12,7 +12,7 @@
     "sources": "https://github.com/Awakened-Redstone/SakuraCake",
     "issues": "https://github.com/Awakened-Redstone/SakuraCake/issues"
   },
-  "license": "AGPL-3.0-only",
+  "license": "LGPL-3.0",
   "icon": "assets/sakuracake/icon.png",
   "environment": "*",
   "entrypoints": {
