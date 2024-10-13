@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "filled=empty": {
+      "model": "sakuracake:block/cauldron"
+    },
+    "filled=filled": {
+      "model": "sakuracake:block/cauldron_filled"
+    },
+    "filled=in_water": {
+      "model": "sakuracake:block/cauldron"
+    }
+  }
+}

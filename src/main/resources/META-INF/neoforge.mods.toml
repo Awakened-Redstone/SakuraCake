@@ -1,0 +1,37 @@
+modLoader = "javafml"
+loaderVersion = "${loader_version}"
+issueTrackerURL = "https://github.com/Awakened-Redstone/${mod_name}/issues"
+license = "GPL-3.0"
+
+[[mods]]
+modId = "${mod_id}"
+version = "${version}"
+displayName = "${mod_name}"
+authors = "Awakened Redstone"
+description = '''
+${description}
+'''
+logoFile = "assets/${mod_id}/icon.png"
+
+[[mixins]]
+config = "${mod_id}.mixins.json"
+
+[[mixins]]
+config = "${mod_id}-client.mixins.json"
+
+[[mixins]]
+config = "${mod_id}-compat.mixins.json"
+
+[[dependencies.${mod_id}]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraft_dependency}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "fabric_api"
+type = "required"
+versionRange = "*"
+ordering = "NONE"
+side = "BOTH"

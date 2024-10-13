@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "package": "com.awakenedredstone.sakuracake.client.mixin",
+  "plugin": "com.awakenedredstone.sakuracake.internal.mixin.SakuraCakeMixinPlugin",
+  "minMixinExtrasVersion": "0.5.0-beta.1",
+  "minVersion": "0.8",
+  "mixins": [],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "BlockColorsMixin",
+    "GlDebugMixin",
+    "ParticleManagerMixin",
+    "RenderLayersMixin",
+    "TessellatorAccessor"
+  ]
+}

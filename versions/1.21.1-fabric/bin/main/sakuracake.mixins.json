@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "com.awakenedredstone.sakuracake.mixin",
+  "minVersion": "0.8",
+  "mixins": [
+    "RegistriesMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "GlDebugMixin"
+  ]
+}
