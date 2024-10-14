@@ -141,7 +141,7 @@ float saturate(float x) {
 }
 
 void main() {
-    vec4 color = texture(Sampler0, texCoord0) /** vertexColor * ColorModulator*/;
+    vec4 color = texture(Sampler0, texCoord0) * vertexColor /** ColorModulator*/;
     /*if (color.a < 0.1) {
         discard;
     }*/
@@ -191,7 +191,7 @@ void main() {
     }*/
 
     vec3 col = (1 - vec3(dist) / 2) / 1.5;
-    vec3 modulator = vec3(0.9, 0.3, 0.3);
+    vec3 modulator = color.rgb;/*vec3(0.9, 0.3, 0.3);*/
 
     float n = (1 - noise(uv / (8)));
 
