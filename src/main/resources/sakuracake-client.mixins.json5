@@ -1,0 +1,26 @@
+{
+  "required": true,
+  "package": "com.awakenedredstone.sakuracake.client.mixin",
+  "plugin": "com.awakenedredstone.sakuracake.internal.mixin.SakuraCakeMixinPlugin",
+  //? if fabric {
+  /*"minMixinExtrasVersion": "0.5.0-beta.1",
+  *///?}
+  "minVersion": "0.8",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "BlockColorsMixin",
+    "GlDebugMixin",
+    "MouseMixin",
+    "ParticleManagerMixin",
+    "RenderLayerMixin",
+    "RenderLayersMixin",
+    "TessellatorAccessor",
+    "WorldRendererMixin",
+    "acessor.DrawContextAccessor"
+  ],
+  "mixins": [
+    "acessor.ItemEntityAccessor"
+  ]
+}

@@ -1,0 +1,43 @@
+/*? if fabric {*/
+/*{
+  "parent": "special-model-loader:builtin/obj",
+  "model": "sakuracake:models/item/pillar2.obj",
+  "display": {
+    "thirdperson_righthand": {
+      "scale": [0.5, 0.5, 0.5]
+    },
+    "thirdperson_lefthand": {
+      "scale": [0.5, 0.5, 0.5]
+    },
+    "firstperson_righthand": {
+      "scale": [0.5, 0.5, 0.5]
+    },
+    "firstperson_lefthand": {
+      "scale": [0.5, 0.5, 0.5]
+    },
+    "ground": {
+      "scale": [0.3, 0.3, 0.3]
+    },
+    "gui": {
+      "rotation": [30, 45, 0],
+      "scale": [0.6, 0.6, 0.6]
+    },
+    "head": {
+      "rotation": [0, 0, 180],
+      "translation": [0, 5, 0]
+    },
+    "fixed": {
+      "scale": [0.5, 0.5, 0.5]
+    }
+  }
+}
+*//*?} else {*/
+{
+  "loader": "neoforge:obj",
+  "model": "sakuracake:models/block/pillar.obj",
+  "automatic_culling": false,
+  "shade_quads": false,
+  "flip_v": false,
+  "emissive_ambient": false
+}
+//?}

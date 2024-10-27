@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+import java.net.URI
+
+
 //region Setup
 plugins {
     `maven-publish`
@@ -44,17 +47,46 @@ repositories {
     maven("https://maven.su5ed.dev/releases")
 
     maven("https://maven.felnull.dev")
+
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = URI("https://api.modrinth.com/maven")
+            }
+        }
+        filter {
+            includeGroup("maven.modrinth")
+        }
+    }
+
+    maven {
+        setUrl("https://dl.cloudsmith.io/public/klikli-dev/mods/maven/")
+        content {
+            includeGroup("com.klikli_dev")
+        }
+    }
 }
 
 dependencies {
     minecraft("com.mojang:minecraft:$minecraftVersion")
 
-    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-${loader.name()}:0.5.0-beta.3") as Any) as Any)
+    annotationProcessor(modImplementation("com.bawnorton.configurable:configurable-${loader.name()}-yarn:${property("configurable")}+$minecraftVersion") {
+        exclude(module = "fabric-networking-api-v1")
+        exclude(module = "yet-another-config-lib")
+    })
+
+    modCompileOnly("com.klikli_dev:modonomicon-$minecraftVersion-${loader.name()}:${property("modonomicon")}") {
+        exclude("mezz.jei")
+    }
+
+    //modCompileOnly("maven.modrinth:sodium:mc1.21-0.6.0-beta.2-${loader.name()}")
 }
 
 fabric {
     modImplementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_api")}+$minecraftVersion")
 
+    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.5.0-beta.3")!!)!!)
     include(modApi("dev.felnull:special-model-loader:1.3.0") {
         exclude("net.fabricmc.fabric-api")
     })
@@ -85,11 +117,19 @@ loom {
         vmArgs("-Dmixin.debug.export=true")
         programArgs("--uuid 2e7c2349-94ec-4862-8b68-344d049840d2 --username AwakenedRedstone")
     }
+
+    sourceSets {
+        main {
+            resources {
+                srcDir(project.file("src/main/generated"))
+            }
+        }
+    }
 }
 
 tasks {
     withType<JavaCompile> {
-        options.release = 21
+        options.release = minecraftVersion.javaVersion()
     }
 
     processResources {
@@ -97,13 +137,25 @@ tasks {
         inputs.properties(compatMixins)
         filesMatching("${mod.id}-compat.mixins.json") { expand(compatMixins) }
     }
+
+    jar {
+        dependsOn("copyDatagen")
+    }
+
+    withType<AbstractCopyTask> {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
+
+    /*clean {
+        delete(file(rootProject.file("build")))
+    }*/
 }
 
 java {
     withSourcesJar()
 
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.toVersion(minecraftVersion.javaVersion())
+    targetCompatibility = JavaVersion.toVersion(minecraftVersion.javaVersion())
 }
 
 val buildAndCollect = tasks.register<Copy>("buildAndCollect") {
@@ -125,6 +177,8 @@ if (stonecutter.current.isActive) {
 if (loader.isFabric) {
     fabricApi {
         configureDataGeneration {
+            createRunConfiguration = true
+            modId = mod.id
             outputDirectory = rootProject.rootDir.resolve("src/main/generated")
         }
     }
@@ -135,6 +189,12 @@ if (loader.isFabric) {
     }
 
     tasks {
+        register<Copy>("copyDatagen") {
+            from("src/main/generated")
+            into("${layout.buildDirectory.get()}/resources/main")
+            dependsOn("runDatagen")
+        }
+
         processResources {
             val modMetadata = mapOf(
                 "mod_id" to mod.id,
@@ -184,6 +244,11 @@ if (loader.isNeoForge) {
 
         remapJar {
             atAccessWideners.add(awName)
+        }
+
+        register<Copy>("copyDatagen") {
+            from(rootProject.file("versions/$minecraftVersion-fabric/src/main/generated"))
+            into("${layout.buildDirectory.get()}/resources/main")
         }
     }
 }

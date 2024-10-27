@@ -1,10 +1,10 @@
 modLoader = "javafml"
 loaderVersion = "${loader_version}"
-issueTrackerURL = "https://github.com/Awakened-Redstone/${mod_name}/issues"
+issueTrackerURL = "https://github.com/Awakened-Redstone/SakuraCake/issues"
 license = "GPL-3.0"
 
 [[mods]]
-modId = "${mod_id}"
+modId = "sakuracake"
 version = "${version}"
 displayName = "${mod_name}"
 authors = "Awakened Redstone"
@@ -14,24 +14,36 @@ ${description}
 logoFile = "assets/${mod_id}/icon.png"
 
 [[mixins]]
-config = "${mod_id}.mixins.json"
+config = "sakuracake.mixins.json"
 
 [[mixins]]
-config = "${mod_id}-client.mixins.json"
+config = "sakuracake-client.mixins.json"
 
 [[mixins]]
-config = "${mod_id}-compat.mixins.json"
+config = "sakuracake-compat.mixins.json"
 
-[[dependencies.${mod_id}]]
+[[dependencies.sakuracake]]
 modId = "minecraft"
 type = "required"
 versionRange = "${minecraft_dependency}"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.${mod_id}]]
+[[dependencies.sakuracake]]
 modId = "fabric_api"
 type = "required"
 versionRange = "*"
 ordering = "NONE"
 side = "BOTH"
+
+[[dependencies.sakuracake]]
+modId = "embeddium"
+type = "incompatible"
+versionRange = "*"
+reason="Incompatible, use sodium 0.6 instead"
+
+[[dependencies.sakuracake]]
+modId = "sodium"
+type = "discouraged"
+versionRange = "[,0.6)"
+reason="Agressive culling, use sodium 0.6 instead"

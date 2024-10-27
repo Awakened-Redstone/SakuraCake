@@ -4,3 +4,5 @@ run*
 build/
 .DS_Store
 .vscode
+/.directory
+/src/main/generated/

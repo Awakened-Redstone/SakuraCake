@@ -2,18 +2,25 @@ package com.awakenedredstone.sakuracake.internal.mixin;
 
 import com.llamalad7.mixinextras.MixinExtrasBootstrap;
 import net.fabricmc.loader.api.FabricLoader;
+import org.jetbrains.annotations.ApiStatus;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 import org.spongepowered.asm.service.MixinService;
+import org.spongepowered.asm.util.Annotations;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
+@ApiStatus.Internal
 public class SakuraCakeMixinPlugin implements IMixinConfigPlugin {
+    private static final Logger LOGGER = LoggerFactory.getLogger("SakuraCake Mixin Plugin");
+
     @Override
     public void onLoad(String mixinPackage) {
         MixinExtrasBootstrap.init();
@@ -34,7 +41,25 @@ public class SakuraCakeMixinPlugin implements IMixinConfigPlugin {
 
             boolean shouldApply = true;
             for (AnnotationNode node : annotationNodes) {
-                if (node.desc.equals(Type.getDescriptor(RequireDevEnv.class))) {
+                if (node.desc.equals(Type.getDescriptor(RequireMods.class))) {
+                    List<String> modIds = Annotations.getValue(node, "value");
+                    boolean applyIfPresent = Annotations.getValue(node, "applyIfPresent", Boolean.TRUE);
+                    if (anyModsLoaded(modIds)) {
+                        LOGGER.debug("{} is {}being applied because {} are loaded",
+                          className,
+                          applyIfPresent ? "" : "not ",
+                          modIds
+                        );
+                        shouldApply = applyIfPresent;
+                    } else {
+                        LOGGER.debug("{} is {}being applied because {} are not loaded",
+                          className,
+                          !applyIfPresent ? "" : "not ",
+                          modIds
+                        );
+                        shouldApply = !applyIfPresent;
+                    }
+                } else if (node.desc.equals(Type.getDescriptor(RequireDevEnv.class))) {
                     shouldApply = FabricLoader.getInstance().isDevelopmentEnvironment();
                 }
 
@@ -60,4 +85,13 @@ public class SakuraCakeMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {}
+
+    private static boolean anyModsLoaded(List<String> modIds) {
+        for (String modId : modIds) {
+            if (FabricLoader.getInstance().isModLoaded(modId)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

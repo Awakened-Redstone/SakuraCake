@@ -15,11 +15,11 @@ public class ReflectionUtil {
             return clazz.getConstructor().newInstance();
         } catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             throw new RuntimeException((e instanceof NoSuchMethodException ? "No zero-args constructor defined on class " : "Could not instantiate class ") + clazz, e);
-        } catch (Throwable e) {
+        } /*catch (Throwable e) {
             SakuraCake.LOGGER.error("Stupid registry error", e);
-            System.exit(1); //TODO: NO
+            System.exit(1);
             throw new RuntimeException();
-        }
+        }*/
     }
 
     public static <C, F> void iterateAccessibleStaticFields(Class<C> clazz, Class<F> targetFieldType, FieldConsumer<F> fieldConsumer) {

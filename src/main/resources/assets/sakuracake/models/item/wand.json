@@ -1,0 +1,79 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"cap": "block/stone",
+		"handle": "block/oak_log"
+	},
+	"elements": [
+		{
+			"name": "handle",
+			"from": [7.5, 4, 7.5],
+			"to": [8.5, 14, 8.5],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 9, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 2, 10], "texture": "#handle"},
+				"east": {"uv": [0, 0, 2, 10], "texture": "#handle"},
+				"south": {"uv": [0, 0, 2, 10], "texture": "#handle"},
+				"west": {"uv": [0, 0, 2, 10], "texture": "#handle"},
+				"up": {"uv": [0, 0, 2, 2], "texture": "#handle"},
+				"down": {"uv": [0, 0, 2, 2], "texture": "#handle"}
+			}
+		},
+		{
+			"from": [7.3, 3, 7.3],
+			"to": [8.7, 4, 8.7],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 3.5, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 4.4, 2], "texture": "#cap"},
+				"east": {"uv": [0, 0, 4.4, 2], "texture": "#cap"},
+				"south": {"uv": [0, 0, 4.4, 2], "texture": "#cap"},
+				"west": {"uv": [0, 0, 4.4, 2], "texture": "#cap"},
+				"up": {"uv": [0, 0, 4.4, 4.4], "texture": "#cap"},
+				"down": {"uv": [0, 0, 4.4, 4.4], "texture": "#cap"}
+			}
+		},
+		{
+			"from": [7.3, 14, 7.3],
+			"to": [8.7, 15, 8.7],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 14.5, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 4.4, 2], "texture": "#cap"},
+				"east": {"uv": [0, 0, 4.4, 2], "texture": "#cap"},
+				"south": {"uv": [0, 0, 4.4, 2], "texture": "#cap"},
+				"west": {"uv": [0, 0, 4.4, 2], "texture": "#cap"},
+				"up": {"uv": [0, 0, 4.4, 4.4], "texture": "#cap"},
+				"down": {"uv": [0, 0, 4.4, 4.4], "texture": "#cap"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 2, 0.5]
+		},
+		"thirdperson_lefthand": {
+			"translation": [0, 2, 0.5]
+		},
+		"ground": {
+			"translation": [0, 1.5, 0]
+		},
+		"gui": {
+			"rotation": [-4, -12.5, 45]
+		},
+		"head": {
+			"rotation": [-51.27, 27.73, 120.66],
+			"translation": [0, 7.25, 0]
+		},
+		"fixed": {
+			"rotation": [0, 0, -45]
+		}
+	},
+	"groups": [
+		0,
+		{
+			"name": "cap",
+			"origin": [7, 14, 7],
+			"color": 0,
+			"children": [1, 2]
+		}
+	]
+}

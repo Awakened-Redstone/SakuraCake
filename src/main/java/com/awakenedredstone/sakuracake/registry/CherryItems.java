@@ -21,10 +21,13 @@ import java.util.List;
 @RegistryNamespace(SakuraCake.MOD_ID)
 public class CherryItems implements ItemAutoRegistry {
     public static final Item BLOSSOM_DUST = new BlossomDustItem(new Item.Settings());
+    //public static final Item AMETHYTE_WINDOW = new Item(new Item.Settings());
+    public static final Item WAND = new Item(new Item.Settings());
+    public static final Item CHERRY_BLOSSOM_CAKE = new Item(new Item.Settings());
 
     public static final RegistryKey<ItemGroup> ITEM_GROUP_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), SakuraCake.id("item_group"));
     public static final ItemGroup ITEM_GROUP = FabricItemGroup.builder()
-      .icon(() -> new ItemStack(BLOSSOM_DUST))
+      .icon(() -> new ItemStack(CHERRY_BLOSSOM_CAKE))
       .displayName(Text.translatable("itemGroup.sakuracake"))
       .build();
 

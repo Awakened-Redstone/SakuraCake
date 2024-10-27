@@ -71,13 +71,10 @@ public class ShaderParticle extends Particle {
 
     @Environment(value = EnvType.CLIENT)
     public static class Factory implements ParticleFactory<SimpleParticleType> {
-        public Factory(SpriteProvider spriteProvider) {
-        }
-
         @Override
         public Particle createParticle(SimpleParticleType simpleParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
             ShaderParticle particle = new ShaderParticle(clientWorld, d, e, f);
-            particle.setColor(0, 1, 0);
+            particle.setColor(0, 1, 1);
             return particle;
         }
     }

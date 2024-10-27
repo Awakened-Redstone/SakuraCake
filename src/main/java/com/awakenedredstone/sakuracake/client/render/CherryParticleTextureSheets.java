@@ -17,7 +17,7 @@ public class CherryParticleTextureSheets {
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
 
-            RenderSystem.setShader(Shaders.PARTICLES::shaders);
+            RenderSystem.setShader(CherryShaders.PARTICLES::shaders);
 
             return tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
         }

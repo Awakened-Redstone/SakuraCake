@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "${mod_id}",
+  "id": "sakuracake",
   "version": "${version}",
   "name": "${mod_name}",
   "description": "${description}",
@@ -21,6 +21,9 @@
     ],
     "client": [
       "com.awakenedredstone.sakuracake.client.platform.SakuraCakeClientWrapper"
+    ],
+    "fabric-datagen": [
+      "com.awakenedredstone.sakuracake.data.generation.SakuraCakeDataGen"
     ]
   },
   "mixins": [
@@ -36,6 +39,12 @@
     "minecraft": "${minecraft_dependency}",
     "java": ">=21",
     "fabric-api": "*"
+  },
+  "conflicts": {
+    "sodium": "<0.6-alpha"
+  },
+  "breaks": {
+    "embeddium": "*"
   },
   "custom": {
     "modmenu": {

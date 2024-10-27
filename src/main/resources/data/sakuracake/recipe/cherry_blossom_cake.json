@@ -1,0 +1,36 @@
+{
+  "type": "sakuracake:thaumic",
+  "key": {
+    "item": "cake"
+  },
+  "ingredients": [
+    {
+      "item": "spore_blossom"
+    },
+    {
+      "item": "pink_petals"
+    },
+    {
+      "item": "sakuracake:blossom_dust"
+    },
+    {
+      "item": "pink_petals"
+    },
+    {
+      "item": "cherry_leaves"
+    },
+    {
+      "item": "pink_petals"
+    },
+    {
+      "item": "sakuracake:blossom_dust"
+    },
+    {
+      "item": "pink_petals"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "sakuracake:cherry_blossom_cake"
+  }
+}

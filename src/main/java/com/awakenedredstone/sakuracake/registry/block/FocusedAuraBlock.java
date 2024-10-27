@@ -3,7 +3,6 @@ package com.awakenedredstone.sakuracake.registry.block;
 import com.awakenedredstone.sakuracake.registry.CherryBlockEntities;
 import com.awakenedredstone.sakuracake.registry.block.entity.FocusedAuraBlockEntity;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.AbstractCauldronBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.ShapeContext;
@@ -64,6 +63,10 @@ public class FocusedAuraBlock extends BlockWithEntity {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return validateTicker(type, CherryBlockEntities.FOCUSED_AURA, FocusedAuraBlockEntity::tick);
+        if (world.isClient) {
+            return validateTicker(type, CherryBlockEntities.FOCUSED_AURA, FocusedAuraBlockEntity::tickClient);
+        } else {
+            return null;
+        }
     }
 }

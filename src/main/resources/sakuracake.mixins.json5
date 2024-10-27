@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "package": "com.awakenedredstone.sakuracake.mixin",
+  "plugin": "com.awakenedredstone.sakuracake.internal.mixin.SakuraCakeMixinPlugin",
+  //? if fabric {
+  /*"minMixinExtrasVersion": "0.5.0-beta.1",
+  *///?}
+  "minVersion": "0.8",
+  "mixins": [
+    "CampFireBlockEntityMixin",
+    "ItemEntityMixin",
+    "ItemStackMixin",
+    "NarratorYeeter",
+    "NbtTypesMixin",
+    "RegistriesMixin",
+    "StringNbtReaderMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,1 +1,15 @@
 accessWidener v2 named
+
+extendable class net/minecraft/recipe/Ingredient
+accessible class net/minecraft/recipe/Ingredient$Entry
+accessible class net/minecraft/recipe/Ingredient$StackEntry
+accessible class net/minecraft/recipe/Ingredient$TagEntry
+
+extendable method net/minecraft/recipe/Ingredient <init> ([Lnet/minecraft/recipe/Ingredient$Entry;)V
+extendable method net/minecraft/recipe/Ingredient <init> (Ljava/util/stream/Stream;)V
+extendable method net/minecraft/entity/ItemEntity canMerge ()Z
+accessible method net/minecraft/recipe/Ingredient$StackEntry <init> (Lnet/minecraft/item/ItemStack;)V
+accessible method net/minecraft/recipe/Ingredient$TagEntry <init> (Lnet/minecraft/registry/tag/TagKey;)V
+accessible method net/minecraft/client/render/RenderLayer of (Lnet/minecraft/client/render/RenderPhase$ShaderProgram;)Lnet/minecraft/client/render/RenderLayer$MultiPhaseParameters;
+
+accessible field net/minecraft/recipe/Ingredient entries [Lnet/minecraft/recipe/Ingredient$Entry;

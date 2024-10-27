@@ -1,17 +1,13 @@
 package com.awakenedredstone.sakuracake.internal.registry;
 
-import com.awakenedredstone.sakuracake.SakuraCake;
 import com.awakenedredstone.sakuracake.internal.registry.util.ReflectionUtil;
 import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
 //? if neoforge {
-/*import net.neoforged.neoforge.registries.DeferredRegister;
-*///?}
+import net.neoforged.neoforge.registries.DeferredRegister;
+//?}
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
 
 public interface AutoRegistry<T> extends FieldProcessingSubject<T> {
     Registry<T> registry();
@@ -21,7 +17,7 @@ public interface AutoRegistry<T> extends FieldProcessingSubject<T> {
     default void postProcessField(String namespace, T value, String identifier, Field field) {}
 
     static <T> void init(Class<? extends AutoRegistry<T>> registry) {
-        SakuraCake.LOGGER.warn("Initializing {}", registry.getSimpleName());
+        //SakuraCake.LOGGER.debug("Initializing {}", registry.getSimpleName());
         AutoRegistry<T> container = ReflectionUtil.tryInstantiateWithNoArgs(registry);
 
         if (!registry.isAnnotationPresent(RegistryNamespace.class)) {
@@ -51,9 +47,5 @@ public interface AutoRegistry<T> extends FieldProcessingSubject<T> {
             if (!handler.shouldProcessField(value, name, field)) return;
             delegate.accept(value, name, field);
         };
-    }
-
-    static <T> Class<T> conform(Class<?> input) {
-        return (Class<T>) input;
     }
 }

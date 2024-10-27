@@ -1,5 +1,6 @@
 package com.awakenedredstone.sakuracake.internal.registry;
 
+import com.awakenedredstone.sakuracake.util.Cast;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -13,6 +14,6 @@ public interface BlockEntityAutoRegistry extends AutoRegistry<BlockEntityType<?>
 
     @Override
     default Class<BlockEntityType<?>> fieldType() {
-        return AutoRegistry.conform(BlockEntityType.class);
+        return Cast.conform(BlockEntityType.class);
     }
 }
