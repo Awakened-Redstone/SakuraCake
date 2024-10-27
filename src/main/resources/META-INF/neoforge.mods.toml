@@ -45,5 +45,5 @@ reason="Incompatible, use sodium 0.6 instead"
 [[dependencies.sakuracake]]
 modId = "sodium"
 type = "discouraged"
-versionRange = "[,0.6)"
+versionRange = "[,0.6-beta)"
 reason="Agressive culling, use sodium 0.6 instead"

@@ -35,7 +35,7 @@ val awName = "${mod.id}.accesswidener"
 
 version = "${mod.version}-$loader+$minecraftVersion"
 group = mod.group
-base.archivesName.set(mod.name)
+base.archivesName.set(mod.id)
 //endregion
 
 repositories {
@@ -299,18 +299,18 @@ publishMods {
     file = tasks.remapJar.get().archiveFile
     val tag = "$loader-${mod.version}+$minecraftVersion"
     val branch = "main"
-    changelog = "[Changelog](https://github.com/Bawnorton/${mod.name}/blob/$branch/CHANGELOG.md)"
+    changelog = "[Changelog](https://github.com/Awakened-Redstone/${mod.name}/blob/$branch/CHANGELOG.md)"
     displayName =
         "${mod.name} ${loader.toString().replaceFirstChar { it.uppercase() }} ${mod.version} for $minecraftVersion"
     type = STABLE
     modLoaders.add(loader.toString())
 
-    github {
+    /*github {
         accessToken = providers.gradleProperty("GITHUB_TOKEN")
-        repository = "Bawnorton/${mod.name}"
+        repository = "Awakened-Redstone/${mod.name}"
         commitish = branch
         tagName = tag
-    }
+    }*/
 
     modrinth {
         accessToken = providers.gradleProperty("MODRINTH_TOKEN")
@@ -318,10 +318,10 @@ publishMods {
         minecraftVersions.addAll(mod.supportedVersions)
     }
 
-    curseforge {
+    /*curseforge {
         accessToken = providers.gradleProperty("CURSEFORGE_TOKEN")
         projectId = mod.curseforgeProjId
         minecraftVersions.addAll(mod.supportedVersions)
-    }
+    }*/
 }
 //endregion
