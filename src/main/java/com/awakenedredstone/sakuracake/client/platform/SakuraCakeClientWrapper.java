@@ -3,7 +3,7 @@ package com.awakenedredstone.sakuracake.client.platform;
 import com.awakenedredstone.sakuracake.client.SakuraCakeClient;
 
 //? if fabric {
-/*import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.ClientModInitializer;
 
 public final class SakuraCakeClientWrapper implements ClientModInitializer {
     @Override
@@ -11,8 +11,8 @@ public final class SakuraCakeClientWrapper implements ClientModInitializer {
         SakuraCakeClient.init();
     }
 }
-*///?} elif neoforge {
-import com.awakenedredstone.sakuracake.SakuraCake;
+//?} elif neoforge {
+/*import com.awakenedredstone.sakuracake.SakuraCake;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.common.Mod;
 
@@ -22,4 +22,4 @@ public final class SakuraCakeClientWrapper {
         SakuraCakeClient.init();
     }
 }
-//?}
+*///?}

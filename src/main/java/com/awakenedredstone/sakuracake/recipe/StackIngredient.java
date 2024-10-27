@@ -40,7 +40,7 @@ public class StackIngredient extends Ingredient {
         super(entries);
     }
 
-    /*? if neoforge {*/public/*?} else {*//*private*//*?}*/ static StackIngredient ofEntries(Stream<? extends Entry> entries) {
+    /*? if neoforge {*//*public*//*?} else {*/private/*?}*/ static StackIngredient ofEntries(Stream<? extends Entry> entries) {
         StackIngredient ingredient = new StackIngredient(entries);
         return ingredient.isEmpty() ? EMPTY : ingredient;
     }

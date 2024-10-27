@@ -13,15 +13,15 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 //? if fabric {
-/*import com.llamalad7.mixinextras.expression.Definition;
+import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
 import net.minecraft.util.math.random.Random;
-*///?}
+//?}
 
 @Mixin(CampfireBlockEntity.class)
 public class CampFireBlockEntityMixin {
     //? if fabric {
-    /*@Environment(EnvType.CLIENT)
+    @Environment(EnvType.CLIENT)
     @Definition(id = "random", local = @Local(type = Random.class))
     @Definition(id = "nextFloat", method = "Lnet/minecraft/util/math/random/Random;nextFloat()F")
     @Expression("random.nextFloat() < 0.11")
@@ -33,8 +33,8 @@ public class CampFireBlockEntityMixin {
 
         return original;
     }
-    *///?} else {
-    @Environment(EnvType.CLIENT)
+    //?} else {
+    /*@Environment(EnvType.CLIENT)
     @ModifyExpressionValue(method = "clientTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/random/Random;nextFloat()F", ordinal = 0))
     private static float removeSmokeOnCauldron(float original, @Local(argsOnly = true) World world, @Local(argsOnly = true) BlockPos pos) {
         if (original < 0.11F && world.getBlockState(pos.offset(Direction.UP, 1)).isOf(CherryBlocks.CAULDRON)) {
@@ -43,5 +43,5 @@ public class CampFireBlockEntityMixin {
 
         return original;
     }
-    //?}
+    *///?}
 }

@@ -22,8 +22,8 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 
 /*? if fabric {*/
-/*import dev.felnull.specialmodelloader.api.event.SpecialModelLoaderEvents;
-*//*?}*/
+import dev.felnull.specialmodelloader.api.event.SpecialModelLoaderEvents;
+/*?}*/
 
 public final class SakuraCakeClient {
     private static long ticks = 0;
@@ -45,8 +45,8 @@ public final class SakuraCakeClient {
         HudRenderCallback.EVENT.register(CherryHudRenderer::render);
 
         /*? if fabric {*/
-        /*SpecialModelLoaderEvents.LOAD_SCOPE.register(() -> (resourceManager, location) -> SakuraCake.MOD_ID.equals(location.getNamespace()));
-        *//*?}*/
+        SpecialModelLoaderEvents.LOAD_SCOPE.register(() -> (resourceManager, location) -> SakuraCake.MOD_ID.equals(location.getNamespace()));
+        /*?}*/
 
         WorldEvents.registerEvent(SakuraCake.id("absorb_item"), (world, pos, data, random) -> {
             for (int s = 0; s < 10; ++s) {

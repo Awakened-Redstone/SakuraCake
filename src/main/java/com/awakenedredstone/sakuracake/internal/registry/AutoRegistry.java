@@ -4,8 +4,8 @@ import com.awakenedredstone.sakuracake.internal.registry.util.ReflectionUtil;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 //? if neoforge {
-import net.neoforged.neoforge.registries.DeferredRegister;
-//?}
+/*import net.neoforged.neoforge.registries.DeferredRegister;
+*///?}
 
 import java.lang.reflect.Field;
 

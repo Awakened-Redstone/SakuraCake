@@ -1,10 +1,10 @@
 /*? if fabric {*/
-/*{
+{
   "parent": "special-model-loader:builtin/obj",
   "model": "sakuracake:models/item/pillar2.obj"
 }
-*//*?} else {*/
-{
+/*?} else {*/
+/*{
   "loader": "neoforge:obj",
   "model": "sakuracake:models/block/pillar.obj",
   "automatic_culling": false,
@@ -12,4 +12,4 @@
   "flip_v": false,
   "emissive_ambient": false
 }
-//?}
+*///?}

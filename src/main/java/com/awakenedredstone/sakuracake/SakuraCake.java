@@ -4,9 +4,9 @@ import com.awakenedredstone.sakuracake.internal.registry.AutoRegistry;
 import com.awakenedredstone.sakuracake.network.SelectedCauldronSlotPacket;
 import com.awakenedredstone.sakuracake.registry.*;
 /*? if fabric {*/
-/*import com.mojang.serialization.Codec;
+import com.mojang.serialization.Codec;
 import dev.felnull.specialmodelloader.api.event.SpecialModelLoaderEvents;
-*///?}
+//?}
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -24,8 +24,8 @@ public final class SakuraCake {
 
     public static void init() {
         /*? if fabric {*/
-        /*initRegistries();
-        *//*?}*/
+        initRegistries();
+        /*?}*/
 
         PayloadTypeRegistry.playC2S().register(SelectedCauldronSlotPacket.ID, SelectedCauldronSlotPacket.PACKET_CODEC);
 

@@ -306,20 +306,20 @@ publishMods {
     modLoaders.add(loader.toString())
 
     /*github {
-        accessToken = providers.gradleProperty("GITHUB_TOKEN")
+        accessToken = providers.environmentVariable("GITHUB_TOKEN")
         repository = "Awakened-Redstone/${mod.name}"
         commitish = branch
         tagName = tag
     }*/
 
     modrinth {
-        accessToken = providers.gradleProperty("MODRINTH_TOKEN")
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
         projectId = mod.modrinthProjId
-        minecraftVersions.addAll(mod.supportedVersions)
+        minecraftVersions.addAll(mod.supportedVersions.split(", "))
     }
 
     /*curseforge {
-        accessToken = providers.gradleProperty("CURSEFORGE_TOKEN")
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
         projectId = mod.curseforgeProjId
         minecraftVersions.addAll(mod.supportedVersions)
     }*/

@@ -27,6 +27,6 @@ public class PacketUtil {
     }
 
     public static void sendPacketToPlayers(List<ServerPlayerEntity> players, Packet<?> packet) {
-        players.forEach(player -> player.networkHandler./*? if fabric {*//*sendPacket*//*?} else {*/send/*?}*/(packet));
+        players.forEach(player -> player.networkHandler./*? if fabric {*/sendPacket/*?} else {*//*send*//*?}*/(packet));
     }
 }
