@@ -59,10 +59,16 @@ public final class SakuraCakeClient {
                 double offsetZ = random.nextGaussian() * 0.1 - 0.05 + 0.5;
                 world.addParticle(ParticleTypes.WHITE_SMOKE, pos.getX() + offsetX, pos.getY() + offsetY, pos.getZ() + offsetZ, velocityX, velocityY, velocityZ);
             }
-            world.playSoundAtBlockCenter(pos, SoundEvents.BLOCK_DECORATED_POT_INSERT, SoundCategory.BLOCKS, 1f, 1f, true);
+            world.playSoundAtBlockCenter(pos, SoundEvents.BLOCK_DECORATED_POT_INSERT, SoundCategory.BLOCKS, 0.5f, 1f, true);
         });
         WorldEvents.registerEvent(SakuraCake.id("empty_cauldron"), (world, pos, data, random) -> {
-            world.playSoundAtBlockCenter(pos, SoundEvents.BLOCK_DECORATED_POT_INSERT, SoundCategory.BLOCKS, 1f, 0f, true);
+            world.playSoundAtBlockCenter(pos, SoundEvents.BLOCK_DECORATED_POT_INSERT, SoundCategory.BLOCKS, 0.5f, 0f, true);
+        });
+        WorldEvents.registerEvent(SakuraCake.id("empty_pedestal"), (world, pos, data, random) -> {
+            world.playSoundAtBlockCenter(pos, SoundEvents.BLOCK_DECORATED_POT_INSERT, SoundCategory.BLOCKS, 0.5f, 0f, true);
+        });
+        WorldEvents.registerEvent(SakuraCake.id("insert_into_pedestal"), (world, pos, data, random) -> {
+            world.playSoundAtBlockCenter(pos, SoundEvents.BLOCK_DECORATED_POT_INSERT, SoundCategory.BLOCKS, 0.5f, 1f, true);
         });
 
         ModelLoadingPlugin.register(context -> {

@@ -84,17 +84,35 @@ public class PedestalBlock extends BlockWithEntity implements Waterloggable {
     }
 
     @Override
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+        boolean isAir = world.getBlockState(sourcePos).isAir();
+        if (!isAir && sourcePos.equals(pos.up()) && world.getBlockEntity(pos) instanceof PedestalBlockEntity entity) {
+            entity.dropItem();
+            entity.markDirtyAndNotify();
+            if (entity.getMasterPedestal() != null) {
+                buildFormation(world, entity.getMasterPedestal());
+            }
+        }
+        super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
+    }
+
+    @Override
     protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!(world.getBlockEntity(pos) instanceof PedestalBlockEntity entity)) return ItemActionResult.FAIL;
         if (stack.isEmpty()) return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
+
+        if (!world.getBlockState(pos.up()).isAir()) {
+            return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
+        }
 
         if (stack.isOf(CherryItems.WAND) && player.isSneaking()) {
             buildFormation(world, pos);
         }
 
-        if (ItemStack.areEqual(entity.getStack(), stack)) return ItemActionResult.FAIL;
+        if (ItemStack.areEqual(entity.getStack(), stack.copy().copyWithCount(1))) return ItemActionResult.FAIL;
         if (world.isClient) return ItemActionResult.SUCCESS;
 
+        WorldEvents.syncEvent(world, SakuraCake.id("insert_into_pedestal"), pos, 0);
         if (!player.isCreative()) entity.dropItem();
         entity.setStack(stack.splitUnlessCreative(1, player));
         entity.markDirtyAndNotify();
@@ -118,7 +136,7 @@ public class PedestalBlock extends BlockWithEntity implements Waterloggable {
         if (entity.getStack().isEmpty()) return ActionResult.FAIL;
         if (world.isClient()) return ActionResult.SUCCESS;
 
-        WorldEvents.syncEvent(world, SakuraCake.id("empty_cauldron"), pos, 0);
+        WorldEvents.syncEvent(world, SakuraCake.id("empty_pedestal"), pos, 0);
         entity.dropItem();
         entity.markDirtyAndNotify();
 
@@ -132,6 +150,10 @@ public class PedestalBlock extends BlockWithEntity implements Waterloggable {
         for (BlockPos pos : POSITIONS.getPositions(masterPos)) {
             BlockState state = world.getBlockState(pos);
             BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (!world.getBlockState(pos.up()).isAir()) {
+                success = false;
+                break;
+            }
             if (state.isOf(CherryBlocks.PEDESTAL) && blockEntity instanceof PedestalBlockEntity) continue;
             success = false;
             break;

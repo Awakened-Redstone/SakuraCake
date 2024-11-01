@@ -80,7 +80,7 @@ public class PedestalRenderer implements BlockEntityRenderer<PedestalBlockEntity
             matrixStack.pop();
         }
 
-        boolean renderItem = (renderCube && !entity.isCrafting()) || entity.isMasterPedestal();
+        boolean renderItem = (renderCube && !entity.isCrafting()) || entity.getIndex() == -1;
         if (!entity.getStack().isEmpty() && renderItem) {
             matrixStack.push();
             float unique;
