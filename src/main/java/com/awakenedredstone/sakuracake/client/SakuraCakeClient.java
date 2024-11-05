@@ -21,6 +21,12 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 
+/*? if neoforge {*/
+/*import com.awakenedredstone.sakuracake.client.event.RenderLayerRegistrationCallback;
+import com.awakenedredstone.sakuracake.registry.CherryBlocks;
+import net.minecraft.client.render.RenderLayer;
+*//*?}*/
+
 /*? if fabric {*/
 import dev.felnull.specialmodelloader.api.event.SpecialModelLoaderEvents;
 /*?}*/
@@ -36,9 +42,11 @@ public final class SakuraCakeClient {
         ParticleFactoryRegistry.getInstance().register(CherryParticles.CAULDRON_BUBBLE_POP, CauldronBubblePopParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(CherryParticles.FOCUSED_AURA, new ShaderParticle.Factory());
         ParticleFactoryRegistry.getInstance().register(CherryParticles.ABSORB, AbsorbParticle.Factory::new);
+        /*? if neoforge {*/
         /*RenderLayerRegistrationCallback.EVENT.register(blocks -> {
-            blocks.put(CherryBlocks.CAULDRON, SakuraCake.isModLoaded("sodium") ? RenderLayer.getTranslucent() : CherryRenderLayers.CUTOUT_MIPPED_TRANSLUCENT);
-        });*/
+            blocks.put(CherryBlocks.CAULDRON, SakuraCake.isModLoaded("sodium") ? RenderLayer.getTranslucent() : RenderLayer.CUTOUT_MIPPED);
+        });
+        *//*?}*/
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> ticks++);
 
