@@ -25,7 +25,7 @@ float random(in vec2 st) {
 
 // 2D Noise based on Morgan McGuire @morgan3d
 // https://www.shadertoy.com/view/4dS3Wd
-float noise2(in vec2 st) {
+float other_noise(in vec2 st) {
     vec2 i = floor(st);
     vec2 f = fract(st);
 
@@ -58,7 +58,7 @@ vec2 grad(ivec2 z) { // replace this anything that returns a random vector
     #if 1
 
     // simple random vectors
-    return vec2(cos(float(n) * noise2(vec2(scaledTime))), sin(float(n) * noise2(vec2(scaledTime))));
+    return vec2(cos(float(n) * other_noise(vec2(scaledTime))), sin(float(n) * other_noise(vec2(scaledTime))));
 
     #else
 
@@ -90,12 +90,10 @@ float noise(in vec2 p) {
     );
 }
 
-
-float hash(uint n) {
-    // integer hash copied from Hugo Elias
-    n = (n << 13U) ^ n;
-    n = n * (n * n * 15731UL + 0x789221UL) + 0x1376312589UL;
-    return float(n & uint(0x7fffffffU)) / float(0x7fffffff);
+float hash(uint val) {
+    uint state = val * 747796405u + 2891336453u;
+    uint word = ((state >> ((state >> 28u) + 4u)) ^ state) * 277803737u;
+    return float((word >> 22u) ^ word);
 }
 
 float hash(int n) {

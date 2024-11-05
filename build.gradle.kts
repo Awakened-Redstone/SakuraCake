@@ -136,6 +136,19 @@ tasks {
         val compatMixins = CompatMixins().getMixins()
         inputs.properties(compatMixins)
         filesMatching("${mod.id}-compat.mixins.json") { expand(compatMixins) }
+
+        val modMetadata = mapOf(
+            "mod_id" to mod.id,
+            "mod_name" to mod.name,
+            "description" to "${mod.description} (✿◠‿◠)",
+            "version" to mod.version,
+            "minecraft_dependency" to mod.minecraftDependency,
+            "loader_version" to loader.getVersion()
+        )
+
+        inputs.properties(modMetadata)
+        filesMatching("fabric.mod.json") { expand(modMetadata) }
+        filesMatching("META-INF/neoforge.mods.toml") { expand(modMetadata) }
     }
 
     jar {
@@ -196,16 +209,7 @@ if (loader.isFabric) {
         }
 
         processResources {
-            val modMetadata = mapOf(
-                "mod_id" to mod.id,
-                "mod_name" to mod.name,
-                "description" to mod.description,
-                "version" to mod.version,
-                "minecraft_dependency" to mod.minecraftDependency
-            )
-
-            inputs.properties(modMetadata)
-            filesMatching("fabric.mod.json") { expand(modMetadata) }
+            exclude("**/neoforge.mods.toml")
         }
     }
 }
@@ -229,17 +233,7 @@ if (loader.isNeoForge) {
 
     tasks {
         processResources {
-            val modMetadata = mapOf(
-                "mod_id" to mod.id,
-                "mod_name" to mod.name,
-                "description" to mod.description,
-                "version" to mod.version,
-                "minecraft_dependency" to mod.minecraftDependency,
-                "loader_version" to loader.getVersion()
-            )
-
-            inputs.properties(modMetadata)
-            filesMatching("META-INF/neoforge.mods.toml") { expand(modMetadata) }
+            exclude("**/fabric.mod.json")
         }
 
         remapJar {
@@ -295,31 +289,59 @@ extensions.configure<PublishingExtension> {
     }
 }
 
+val CHANGELOG: String = if (file("CHANGELOG.md").exists()) file("CHANGELOG.md").readText() else "No changelog provided"
+
+fun loader(): String {
+    return when (loader.name()) {
+        "fabric" -> "Fabric"
+        "neoforge" -> "NeoForge"
+        else -> "Unknown"
+    }
+}
+
 publishMods {
-    file = tasks.remapJar.get().archiveFile
-    val tag = "$loader-${mod.version}+$minecraftVersion"
-    val branch = "main"
-    changelog = "[Changelog](https://github.com/Awakened-Redstone/${mod.name}/blob/$branch/CHANGELOG.md)"
-    displayName =
-        "${mod.name} ${loader.toString().replaceFirstChar { it.uppercase() }} ${mod.version} for $minecraftVersion"
+    val projectVersion: String = property("mod_version").toString()
+    val projectVersionNumber: List<String> = projectVersion.split(Regex("-"), 2)
     type = STABLE
-    modLoaders.add(loader.toString())
+
+    var releaseName = "Release ${projectVersionNumber[0]} for ${loader()}"
+    if (projectVersion.contains("beta")) {
+        val projectBeta: List<String> = projectVersionNumber[1].split(Regex("\\."), 2)
+        releaseName = "${projectVersionNumber[0]} - Beta ${projectBeta[1]} for ${loader()}"
+        type = BETA
+    } else if (projectVersion.contains("alpha")) {
+        val projectAlpha: List<String> = projectVersionNumber[1].split(Regex("\\."), 2)
+        releaseName = "${projectVersionNumber[0]} - Alpha ${projectAlpha[1]} for ${loader()}"
+        type = ALPHA
+    } else if (projectVersion.contains("rc")) {
+        val projectRC: List<String> = projectVersionNumber[1].split(Regex("\\."), 2)
+        releaseName = "${projectVersionNumber[0]} - Release Candidate ${projectRC[1]} for ${loader()}"
+        type = BETA
+    }
+
+    file = tasks.remapJar.get().archiveFile
+    val tag = "${mod.version}+$loader"
+    val branch = "main"
+    changelog = CHANGELOG
+    displayName = releaseName
+    modLoaders.add(loader.name())
 
     /*github {
-        accessToken = providers.environmentVariable("GITHUB_TOKEN")
+        accessToken = providers.gradleProperty("GITHUB_TOKEN")
         repository = "Awakened-Redstone/${mod.name}"
         commitish = branch
         tagName = tag
     }*/
 
     modrinth {
-        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+        accessToken = providers.gradleProperty("MODRINTH_TOKEN")
         projectId = mod.modrinthProjId
+        version = tag
         minecraftVersions.addAll(mod.supportedVersions.split(", "))
     }
 
     /*curseforge {
-        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+        accessToken = providers.gradleProperty("CURSEFORGE_TOKEN")
         projectId = mod.curseforgeProjId
         minecraftVersions.addAll(mod.supportedVersions)
     }*/
