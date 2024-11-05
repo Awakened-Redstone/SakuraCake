@@ -11,9 +11,7 @@
     "ItemEntityMixin",
     "ItemStackMixin",
     "NarratorYeeter",
-    "NbtTypesMixin",
-    "RegistriesMixin",
-    "StringNbtReaderMixin"
+    "RegistriesMixin"
   ],
   "injectors": {
     "defaultRequire": 1

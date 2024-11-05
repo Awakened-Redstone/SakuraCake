@@ -1,10 +1,7 @@
 package com.awakenedredstone.sakuracake.registry.block.entity;
 
-import com.awakenedredstone.sakuracake.nbt.NbtNull;
 import com.awakenedredstone.sakuracake.particle.AbsorbColorTransitionParticleEffect;
-import com.awakenedredstone.sakuracake.recipe.MixinRecipe;
 import com.awakenedredstone.sakuracake.recipe.ThaumicRecipe;
-import com.awakenedredstone.sakuracake.recipe.input.ItemStackRecipeInput;
 import com.awakenedredstone.sakuracake.recipe.input.PedestalRecipeInput;
 import com.awakenedredstone.sakuracake.registry.CherryBlockEntities;
 import com.awakenedredstone.sakuracake.registry.CherryBlocks;
@@ -13,20 +10,18 @@ import com.awakenedredstone.sakuracake.registry.block.PedestalBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.inventory.SingleStackInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtByte;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.particle.DustColorTransitionParticleEffect;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.registry.RegistryWrapper;
@@ -43,7 +38,6 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 public class PedestalBlockEntity extends BlockEntity implements SingleStackInventory.SingleStackBlockEntityInventory {
     public static final Logger LOGGER = LoggerFactory.getLogger("Pedestal Block Entity");
@@ -63,7 +57,7 @@ public class PedestalBlockEntity extends BlockEntity implements SingleStackInven
     protected ItemStack stack = ItemStack.EMPTY;
     protected BlockPos masterPedestal = null;
     protected int index = -1;
-    protected int crafting = 0;
+    protected int crafting = -1;
 
     public PedestalBlockEntity(BlockPos pos, BlockState state) {
         super(CherryBlockEntities.PEDESTAL, pos, state);
@@ -79,6 +73,7 @@ public class PedestalBlockEntity extends BlockEntity implements SingleStackInven
             if (block.crafting >= CRAFT_TIME * 8) {
                 if (block.crafting++ >= CRAFT_TIME * 9) {
                     Optional<ItemStack> itemStack = block.craft();
+                    boolean success = itemStack.isPresent();
                     PedestalBlock.POSITIONS.forEach(pos, blockPos -> {
                         var blockEntity = world.getBlockEntity(blockPos);
                         if (blockEntity instanceof PedestalBlockEntity entity) {
@@ -99,8 +94,8 @@ public class PedestalBlockEntity extends BlockEntity implements SingleStackInven
                     double distance = Math.sqrt(start.squaredDistanceTo(end));
                     Vec3d direction = lookAt(start, end);
 
-                    Vec3d color1 = Vec3d.unpackRgb(0xf4a6c9);
-                    Vec3d color2 = Vec3d.unpackRgb(0x90dff9);
+                    Vec3d color1 = Vec3d.unpackRgb(success ? 0xf4a6c9 : 0xff0000);
+                    Vec3d color2 = Vec3d.unpackRgb(success? 0x90dff9 : 0xff0000);
                     double colorDistance = Math.sqrt(color1.squaredDistanceTo(color2));
                     Vec3d colorDirection = lookAt(color1, color2);
 
@@ -244,6 +239,8 @@ public class PedestalBlockEntity extends BlockEntity implements SingleStackInven
             return Optional.empty();
         }
 
+        if (stack.isEmpty()) return Optional.empty();
+
         PedestalRecipeInput input = new PedestalRecipeInput(stack, stacks);
         Optional<RecipeEntry<ThaumicRecipe>> recipeEntry = this.matchGetter.getFirstMatch(input, this.world);
         if (recipeEntry.isPresent()) {
@@ -376,7 +373,7 @@ public class PedestalBlockEntity extends BlockEntity implements SingleStackInven
         }
 
         if (nbt.isEmpty()) {
-            nbt.put("_", NbtNull.INSTANCE);
+            nbt.put("_", NbtByte.of((byte) 0));
         }
     }
 
