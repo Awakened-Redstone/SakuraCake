@@ -24,10 +24,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
 import net.minecraft.item.Items;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
+import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
@@ -37,6 +40,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.event.GameEvent;
@@ -46,6 +50,7 @@ import java.util.Optional;
 
 public class CherryCauldronBlock extends BlockWithEntity {
     public static final EnumProperty<FillState> STATE = EnumProperty.of("state", FillState.class);
+    public static final BooleanProperty LOCKED = BooleanProperty.of("locked");
     //region Hitbox
     private static final VoxelShape INNER_BOX = createCuboidShape(2, 6, 2, 14, 16, 14);
     protected static final VoxelShape OUTLINE_SHAPE = VoxelShapes.combineAndSimplify(
@@ -76,7 +81,7 @@ public class CherryCauldronBlock extends BlockWithEntity {
 
     public CherryCauldronBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(this.stateManager.getDefaultState().with(STATE, FillState.EMPTY));
+        this.setDefaultState(this.stateManager.getDefaultState().with(STATE, FillState.EMPTY).with(LOCKED, false));
     }
 
     @Override
@@ -86,12 +91,12 @@ public class CherryCauldronBlock extends BlockWithEntity {
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(STATE);
+        builder.add(STATE).add(LOCKED);
     }
 
     @Override
     protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!hasWater(state) && stack.isOf(Items.WATER_BUCKET)) {
+        if (!hasWater(state) && stack.isOf(Items.WATER_BUCKET) && !state.get(LOCKED)) {
             player.setStackInHand(hand, ItemUsage.exchangeStack(stack, player, new ItemStack(Items.BUCKET)));
 
             boolean litCampfire = isLitCampfire(world.getBlockState(pos.down()));
@@ -102,7 +107,7 @@ public class CherryCauldronBlock extends BlockWithEntity {
             return ItemActionResult.SUCCESS;
         }
 
-        if (hasWater(state) && stack.isOf(Items.BUCKET)) {
+        if (hasWater(state) && stack.isOf(Items.BUCKET) && !state.get(LOCKED)) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             player.setStackInHand(hand, ItemUsage.exchangeStack(stack, player, new ItemStack(Items.WATER_BUCKET)));
             world.setBlockState(pos, state.with(STATE, FillState.EMPTY));
@@ -119,6 +124,11 @@ public class CherryCauldronBlock extends BlockWithEntity {
         if (state.get(STATE).equals(FillState.BOILING) && stack.isOf(CherryItems.WAND)) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (!(blockEntity instanceof CherryCauldronBlockEntity block)) return ItemActionResult.FAIL;
+
+            if (block.isLocked()) {
+                player.sendMessage(Text.translatable("container.isLocked", Text.translatable("block.sakuracake.cauldron")).formatted(Formatting.RED), true);
+                return ItemActionResult.SUCCESS;
+            }
 
             Optional<ItemStack> craft = block.craft();
             if (craft.isPresent()) {
@@ -154,6 +164,11 @@ public class CherryCauldronBlock extends BlockWithEntity {
         }
 
         if (entity.isEmpty()) {
+            return ActionResult.FAIL;
+        }
+
+        if (entity.isLocked()) {
+            player.sendMessage(Text.translatable("container.isLocked", Text.translatable("block.sakuracake.cauldron")).formatted(Formatting.RED), true);
             return ActionResult.SUCCESS;
         }
 

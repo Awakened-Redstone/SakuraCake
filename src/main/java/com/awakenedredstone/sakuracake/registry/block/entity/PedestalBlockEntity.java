@@ -11,6 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SingleStackInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtByte;
@@ -58,6 +59,7 @@ public class PedestalBlockEntity extends BlockEntity implements SingleStackInven
     protected BlockPos masterPedestal = null;
     protected int index = -1;
     protected int crafting = -1;
+    private boolean locked = false;
 
     public PedestalBlockEntity(BlockPos pos, BlockState state) {
         super(CherryBlockEntities.PEDESTAL, pos, state);
@@ -255,6 +257,10 @@ public class PedestalBlockEntity extends BlockEntity implements SingleStackInven
     }
 
     //region Inventory
+    public boolean isLocked() {
+        return locked;
+    }
+
     @Override
     public BlockEntity asBlockEntity() {
         return this;
@@ -294,6 +300,11 @@ public class PedestalBlockEntity extends BlockEntity implements SingleStackInven
         }
 
         this.stack = stack;
+    }
+
+    @Override
+    public boolean canPlayerUse(PlayerEntity player) {
+        return !this.locked && SingleStackBlockEntityInventory.super.canPlayerUse(player);
     }
 
     public static <T extends ParticleEffect> void castRay(T particle, World world, Vec3d start, Vec3d end) {
@@ -372,6 +383,10 @@ public class PedestalBlockEntity extends BlockEntity implements SingleStackInven
             nbt.putShort("crafting", (short) crafting);
         }
 
+        if (this.locked) {
+            nbt.putBoolean("Locked", true);
+        }
+
         if (nbt.isEmpty()) {
             nbt.put("_", NbtByte.of((byte) 0));
         }
@@ -399,6 +414,8 @@ public class PedestalBlockEntity extends BlockEntity implements SingleStackInven
         } else {
             this.crafting = -1;
         }
+
+        this.locked = nbt.getBoolean("Locked");
     }
 
     @Override

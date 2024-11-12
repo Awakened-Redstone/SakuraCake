@@ -18,6 +18,8 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
@@ -105,6 +107,11 @@ public class PedestalBlock extends BlockWithEntity implements Waterloggable {
             return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
         }
 
+        if (entity.isLocked()) {
+            player.sendMessage(Text.translatable("container.isLocked", Text.translatable("block.sakuracake.pedestal")).formatted(Formatting.RED), true);
+            return ItemActionResult.SUCCESS;
+        }
+
         if (stack.isOf(CherryItems.WAND) && player.isSneaking()) {
             buildFormation(world, pos);
         }
@@ -123,6 +130,11 @@ public class PedestalBlock extends BlockWithEntity implements Waterloggable {
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (!(world.getBlockEntity(pos) instanceof PedestalBlockEntity entity)) return ActionResult.FAIL;
+
+        if (entity.isLocked()) {
+            player.sendMessage(Text.translatable("container.isLocked", Text.translatable("block.sakuracake.pedestal")).formatted(Formatting.RED), true);
+            return ActionResult.SUCCESS;
+        }
 
         if (player.isSneaking()) {
             if (entity.canCraft()) {

@@ -53,6 +53,7 @@ public class CherryCauldronBlockEntity extends BlockEntity implements SidedInven
     private short clientBoilingTimer = 0;
     private short boilingTimer = 0;
     private short cooldown = 0;
+    private boolean locked = false;
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(16, ItemStack.EMPTY);
     private final RecipeManager.MatchGetter<ItemStackRecipeInput, MixinRecipe> matchGetter = RecipeManager.createCachedMatchGetter(CherryRecipeTypes.MIXIN);
 
@@ -111,7 +112,7 @@ public class CherryCauldronBlockEntity extends BlockEntity implements SidedInven
     public static void tickServer(World world, BlockPos pos, BlockState state, CherryCauldronBlockEntity block) {
         if (block.removed) return;
 
-        if (block.boilingTimer >= boilTime && block.cooldown <= 0) {
+        if (block.boilingTimer >= boilTime && block.cooldown <= 0 && !block.locked) {
             List<ItemEntity> items = block.getDroppedItems();
             block.cooldown = 5;
             if (!items.isEmpty() && extract(block, items.getFirst())) {
@@ -152,6 +153,10 @@ public class CherryCauldronBlockEntity extends BlockEntity implements SidedInven
     }
 
     //region Inventory
+    public boolean isLocked() {
+        return locked;
+    }
+
     public DefaultedList<ItemStack> getInventory() {
         return inventory;
     }
@@ -253,6 +258,7 @@ public class CherryCauldronBlockEntity extends BlockEntity implements SidedInven
     }
 
     public ItemStack dropSlot(int slot) {
+        if (this.locked) return ItemStack.EMPTY;
         ItemStack stack = this.inventory.get(slot);
         if (stack.isEmpty()) return stack;
 
@@ -338,15 +344,19 @@ public class CherryCauldronBlockEntity extends BlockEntity implements SidedInven
         nbt.putShort("BoilingTime", boilingTimer);
         nbt.putShort("Cooldown", cooldown);
         Inventories.writeNbt(nbt, this.inventory, registryLookup);
+        if (this.locked) {
+             nbt.putBoolean("Locked", true);
+        }
     }
 
     @Override
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.readNbt(nbt, registryLookup);
-        boilingTimer = nbt.getShort("BoilingTime");
-        cooldown = nbt.getShort("Cooldown");
+        this.boilingTimer = nbt.getShort("BoilingTime");
+        this.cooldown = nbt.getShort("Cooldown");
         this.inventory.clear();
         Inventories.readNbt(nbt, this.inventory, registryLookup);
+        this.locked = nbt.getBoolean("Locked");
     }
 
     public BlockEntityUpdateS2CPacket toUpdatePacket() {
