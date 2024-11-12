@@ -1,6 +1,7 @@
 package com.awakenedredstone.sakuracake.client.render.block;
 
 import com.awakenedredstone.sakuracake.SakuraCake;
+import com.awakenedredstone.sakuracake.client.SakuraCakeClient;
 import com.awakenedredstone.sakuracake.registry.block.entity.PedestalBlockEntity;
 import net.fabricmc.fabric.api.client.model.loading.v1.FabricBakedModelManager;
 import net.minecraft.block.SporeBlossomBlock;
@@ -32,7 +33,7 @@ public class PedestalRenderer implements BlockEntityRenderer<PedestalBlockEntity
 
     @Override
     public void render(PedestalBlockEntity entity, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        float time = (entity.getWorld().getTime() + tickDelta) % ((float) Math.PI * 2 * 100);
+        float time = (SakuraCakeClient.getTicks() + tickDelta) % ((float) Math.PI * 2 * 100);
 
         boolean renderCube = entity.hasMasterPedestal() && !entity.isMasterPedestal();
 
@@ -107,7 +108,7 @@ public class PedestalRenderer implements BlockEntityRenderer<PedestalBlockEntity
                 }
                 matrixStack.translate(0, -0.15, 0);
             }
-            int age = (int) (entity.getWorld().getTime());
+            int age = (int) (SakuraCakeClient.getTicks());
             float itemRotation = (age + tickDelta) / 30.0F;
             matrixStack.multiply(RotationAxis.POSITIVE_Y.rotation(itemRotation));
             ItemEntityRenderer.renderStack(context.getItemRenderer(), matrixStack, vertexConsumers, light, entity.getStack(), model, model.hasDepth(), Random.create());

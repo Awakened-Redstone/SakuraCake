@@ -27,10 +27,6 @@ import com.awakenedredstone.sakuracake.registry.CherryBlocks;
 import net.minecraft.client.render.RenderLayer;
 *//*?}*/
 
-/*? if fabric {*/
-import dev.felnull.specialmodelloader.api.event.SpecialModelLoaderEvents;
-/*?}*/
-
 public final class SakuraCakeClient {
     private static long ticks = 0;
 
@@ -51,10 +47,6 @@ public final class SakuraCakeClient {
         ClientTickEvents.END_CLIENT_TICK.register(client -> ticks++);
 
         HudRenderCallback.EVENT.register(CherryHudRenderer::render);
-
-        /*? if fabric {*/
-        SpecialModelLoaderEvents.LOAD_SCOPE.register(() -> (resourceManager, location) -> SakuraCake.MOD_ID.equals(location.getNamespace()));
-        /*?}*/
 
         WorldEvents.registerEvent(SakuraCake.id("absorb_item"), (world, pos, data, random) -> {
             for (int s = 0; s < 10; ++s) {

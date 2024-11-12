@@ -87,9 +87,9 @@ fabric {
     modImplementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_api")}+$minecraftVersion")
 
     include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.5.0-beta.3")!!)!!)
-    include(modApi("dev.felnull:special-model-loader:1.3.0") {
+    /*include(modApi("dev.felnull:special-model-loader:1.3.0") {
         exclude("net.fabricmc.fabric-api")
-    })
+    })*/
 }
 
 neoforge {

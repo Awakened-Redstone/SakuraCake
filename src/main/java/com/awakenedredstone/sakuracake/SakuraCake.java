@@ -3,11 +3,6 @@ package com.awakenedredstone.sakuracake;
 import com.awakenedredstone.sakuracake.internal.registry.AutoRegistry;
 import com.awakenedredstone.sakuracake.network.SelectedCauldronSlotPacket;
 import com.awakenedredstone.sakuracake.registry.*;
-/*? if fabric {*/
-import com.mojang.serialization.Codec;
-import dev.felnull.specialmodelloader.api.event.SpecialModelLoaderEvents;
-//?}
-import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
