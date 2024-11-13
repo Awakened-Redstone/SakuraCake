@@ -6,6 +6,7 @@ import com.awakenedredstone.sakuracake.registry.block.entity.PedestalBlockEntity
 import net.fabricmc.fabric.api.client.model.loading.v1.FabricBakedModelManager;
 import net.minecraft.block.SporeBlossomBlock;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -17,10 +18,7 @@ import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.BlockItem;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RotationAxis;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
 
 public class PedestalRenderer implements BlockEntityRenderer<PedestalBlockEntity> {
@@ -88,12 +86,19 @@ public class PedestalRenderer implements BlockEntityRenderer<PedestalBlockEntity
             if (entity.getIndex() != -1) {
                 unique = (float) (Math.PI / 4 * entity.getIndex());
             } else {
-                unique = entity.getPos().hashCode();
+                unique = entity.getPos().hashCode() % 65535;
             }
             //float offset = MathHelper.sin(time / 10.0f) * 0.05f + 0.025f;
             BakedModel model = context.getItemRenderer().getModel(entity.getStack(), entity.getWorld(), null, 0);
 
-            float bobbing = MathHelper.sin(time / 10 + unique) * 0.075f + 0.2f;
+            float bobbing = MathHelper.sin(time / 10 + unique) * 0.175f + 0.2f;
+            matrixStack.push();
+            matrixStack.translate(0, 2, 0);
+            matrixStack.scale(0.05f, -0.05f, 0.05f);
+            context.getTextRenderer().draw("" + bobbing, 0, 0, 0xffffffff, true, matrixStack.peek().getPositionMatrix(), vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, light);
+            context.getTextRenderer().draw("" + unique, 0, -10, 0xffffffff, true, matrixStack.peek().getPositionMatrix(), vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, light);
+            matrixStack.pop();
+
             //PedestalBlockEntity.LOGGER.info("Client: {}", bobbing);
             float transform = model.getTransformation().getTransformation(ModelTransformationMode.GROUND).scale.y();
             matrixStack.translate(0, bobbing + 0.25 * transform, 0);
