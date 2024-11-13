@@ -92,12 +92,6 @@ public class PedestalRenderer implements BlockEntityRenderer<PedestalBlockEntity
             BakedModel model = context.getItemRenderer().getModel(entity.getStack(), entity.getWorld(), null, 0);
 
             float bobbing = MathHelper.sin(time / 10 + unique) * 0.175f + 0.2f;
-            matrixStack.push();
-            matrixStack.translate(0, 2, 0);
-            matrixStack.scale(0.05f, -0.05f, 0.05f);
-            context.getTextRenderer().draw("" + bobbing, 0, 0, 0xffffffff, true, matrixStack.peek().getPositionMatrix(), vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, light);
-            context.getTextRenderer().draw("" + unique, 0, -10, 0xffffffff, true, matrixStack.peek().getPositionMatrix(), vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, light);
-            matrixStack.pop();
 
             //PedestalBlockEntity.LOGGER.info("Client: {}", bobbing);
             float transform = model.getTransformation().getTransformation(ModelTransformationMode.GROUND).scale.y();

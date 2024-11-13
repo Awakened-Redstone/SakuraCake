@@ -1,2 +1,2 @@
 # Fix
-- Fix mod description
+- Fix floating point precision error
