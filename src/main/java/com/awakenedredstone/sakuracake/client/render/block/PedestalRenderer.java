@@ -91,7 +91,7 @@ public class PedestalRenderer implements BlockEntityRenderer<PedestalBlockEntity
             //float offset = MathHelper.sin(time / 10.0f) * 0.05f + 0.025f;
             BakedModel model = context.getItemRenderer().getModel(entity.getStack(), entity.getWorld(), null, 0);
 
-            float bobbing = MathHelper.sin(time / 10 + unique) * 0.175f + 0.2f;
+            float bobbing = MathHelper.sin(time / 10 + unique) * 0.075f + 0.2f;
 
             //PedestalBlockEntity.LOGGER.info("Client: {}", bobbing);
             float transform = model.getTransformation().getTransformation(ModelTransformationMode.GROUND).scale.y();
